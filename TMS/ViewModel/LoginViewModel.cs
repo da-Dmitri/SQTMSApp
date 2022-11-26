@@ -104,8 +104,9 @@ namespace TMS.ViewModel
                 if (Username == "Buyer")
                 {
                     IsBuyer = true;
+                    IsViewVisible = false;
                 }
-                IsViewVisible = false;
+                
             }
             else
             {
