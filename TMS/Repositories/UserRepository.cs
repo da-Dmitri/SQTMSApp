@@ -22,12 +22,21 @@ namespace TMS.Repositories
             using (var connection = GetConnection())
             using (var command = new MySqlCommand())
             {
-                connection.Open();
-                command.Connection = connection;
-                command.CommandText = "select * from Users where UserName=@Username and Password=@Password";
-                command.Parameters.Add("@Username", MySqlDbType.VarChar, 50).Value = credential.UserName;
-                command.Parameters.Add("@Password", MySqlDbType.VarChar, 50).Value = credential.Password;
-                validUser = command.ExecuteScalar() == null ? false : true;
+                try
+                {
+                    connection.Open();
+                    command.Connection = connection;
+                    command.CommandText = "select * from Users where UserName=@Username and Password=@Password";
+                    command.Parameters.Add("@Username", MySqlDbType.VarChar, 50).Value = credential.UserName;
+                    command.Parameters.Add("@Password", MySqlDbType.VarChar, 50).Value = credential.Password;
+                    validUser = command.ExecuteScalar() == null ? false : true;
+                }
+                catch(MySqlException e)
+                {
+                    Console.WriteLine("Error connecting to database: " + e);
+                    validUser = false;
+                }
+
             }
             return validUser;
         }
