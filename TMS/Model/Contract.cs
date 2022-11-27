@@ -14,12 +14,21 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TMS.Model {
+
+    
+
     internal class Contract {
+
+        //Contract Properties
+        public string ClientName { get; set; }
 
         public Contract() {
         
         }
 
+        //fill data into the constructor
         public Contract(string client_name) {
+        
+        }
     }
 }
