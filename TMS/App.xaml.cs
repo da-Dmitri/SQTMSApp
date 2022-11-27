@@ -25,9 +25,16 @@ namespace TMS
             {
                 if (loginView.IsVisible == false && loginView.IsLoaded)
                 {
-                    var buyerView = new BuyerView();
-                    buyerView.Show();
-                    loginView.Close();
+                    switch (loginView.txtUsername.Text)
+                    {
+                        case "buyer":
+                            var buyerView = new BuyerView();
+                            buyerView.Show();
+                            loginView.Close();
+                            break;
+                        default:
+                            break;
+                    }
                 }
             };
         }

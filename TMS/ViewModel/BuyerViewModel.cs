@@ -29,6 +29,7 @@ namespace TMS.ViewModel
         public BuyerViewModel()
         {
             userRepository = new UserRepository();
+            CurrentUserAccount = new UserAccountModel();
             LoadCurrentUserData();
         }
 
@@ -37,17 +38,16 @@ namespace TMS.ViewModel
             var user = userRepository.GetByUserName(Thread.CurrentPrincipal.Identity.Name);
             if (user != null)
             {
-                CurrentUserAccount = new UserAccountModel()
                 {
-                    UserName = user.Username,
-                    DisplayName = $"Welcome {user.FirstName} {user.LastName}!",
-                    ProfilePicture = null
+                    CurrentUserAccount.UserName = user.Username;
+                    CurrentUserAccount.DisplayName = $"Welcome {user.FirstName} {user.LastName}!";
+                    CurrentUserAccount.ProfilePicture = null;
                 };
             }
             else
             {
-                MessageBox.Show("Invalid user, not logged in");
-
+                CurrentUserAccount.DisplayName="Invalid user, not logged in";
+                // Hide child views.
             }
         }
     }
