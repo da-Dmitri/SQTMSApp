@@ -20,6 +20,7 @@ namespace TMS.ViewModel
         private string _errorMessage;
         private bool _isViewVisible = true;
         private bool _isBuyer = false;
+        private int _userRole;
 
         private IUserRepository userRepository;
 
@@ -65,12 +66,19 @@ namespace TMS.ViewModel
             set { _isBuyer = value; }
         }
 
+        public int UserRole
+        {
+            get { return _userRole; }
+            set { _userRole = value; }
+        }
+
 
         // Commands
         public ICommand LoginCommand { get;}
         public ICommand RecoverPasswordCommand { get; }
         public ICommand ShowPasswordCommand { get; }
         public ICommand RememberPasswordCommand { get; }
+        
 
         // Constructor
         public LoginViewModel()
@@ -101,12 +109,7 @@ namespace TMS.ViewModel
             {
                 Thread.CurrentPrincipal = new GenericPrincipal(
                     new GenericIdentity(Username), null);
-                if (Username == "Buyer")
-                {
-                    IsBuyer = true;
                     IsViewVisible = false;
-                }
-                
             }
             else
             {

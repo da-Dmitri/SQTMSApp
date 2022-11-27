@@ -17,6 +17,8 @@ namespace TMS
     {
         protected void ApplicationStart(object sender, StartupEventArgs e)
         {
+            // create class for holding view state
+
             var loginView = new LoginView();
             loginView.Show();
             loginView.IsVisibleChanged += (s, ev) =>
