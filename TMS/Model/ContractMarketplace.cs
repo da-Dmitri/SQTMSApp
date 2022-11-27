@@ -7,6 +7,9 @@
  *      This file contains the class that is in charge of
  *      connecting to the contract marketplace and retrieving
  *      a list of customer contracts
+ *      The current credentials for the marketplace is the following
+ *      Username: DevOSHT
+ *      Password: Snodgr4ss!
 */
 using System;
 using System.Collections.Generic;
@@ -20,16 +23,26 @@ namespace TMS {
     internal class ContractMarketplace {
 
         //where to connect to
-        public IPAddress MarketplaceAddress { get; set; }
+        public IPAddress MarketplaceIp { get; set; }
+        public int MarketplacePort { get; set; }
+        public string Username { get; private set;}
+        public string Password { get; private set; }
 
-        public ContractMarketplace() {
-            //default to localhost
-            MarketplaceAddress = IPAddress.Parse("127.0.0.1");
+
+        private ContractMarketplace() {
+            //there are no defaults, they must be set
+            MarketplaceIp = IPAddress.Parse("159.89.117.198");
+            MarketplacePort = 3306;
+            Username = "DevOSHT";
+            Password = "Snodgr4ss!";
         }
 
         //set the ip using the constructor
-        public ContractMarketplace(IPAddress ip) {
-            MarketplaceAddress = ip;
+        public ContractMarketplace(IPAddress ip, int port, string user, string pass) {
+            MarketplaceIp = ip;
+            MarketplacePort = port;
+            Username = user;
+            Password = pass;
         }
 
         /*
@@ -47,9 +60,10 @@ namespace TMS {
 
             //attempt to connect to the database
 
-            //select the contracts table
+            //do query
+            //SELECT * FROM Contract
 
-            //transfer the query output into the list
+            //transfer the query output into "output"
 
             return output;
         }
