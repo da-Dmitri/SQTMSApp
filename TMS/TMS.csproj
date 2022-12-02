@@ -152,7 +152,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\buyerprofile.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\logo.png" />
   </ItemGroup>

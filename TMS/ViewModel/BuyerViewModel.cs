@@ -16,6 +16,9 @@ namespace TMS.ViewModel
         private UserAccountModel _currentUserAccount;
         private IUserRepository userRepository;
 
+        // buyer object
+
+
         public UserAccountModel CurrentUserAccount
         {
             get { return _currentUserAccount; }
@@ -40,13 +43,13 @@ namespace TMS.ViewModel
             {
                 {
                     CurrentUserAccount.UserName = user.Username;
-                    CurrentUserAccount.DisplayName = $"Welcome {user.FirstName} {user.LastName}!";
+                    CurrentUserAccount.DisplayName = $"{user.FirstName} {user.LastName}";
                     CurrentUserAccount.ProfilePicture = null;
                 };
             }
             else
             {
-                CurrentUserAccount.DisplayName="Invalid user, not logged in";
+                CurrentUserAccount.DisplayName="User not logged in";
                 // Hide child views.
             }
         }
