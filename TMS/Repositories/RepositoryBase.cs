@@ -13,7 +13,7 @@ namespace TMS.Repositories
     {
         
         private string myConnectionString;
-        MySqlConnection conn;
+        //MySqlConnection conn;
 
         public RepositoryBase()
         {

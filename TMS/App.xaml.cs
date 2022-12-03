@@ -17,17 +17,40 @@ namespace TMS
     {
         protected void ApplicationStart(object sender, StartupEventArgs e)
         {
+            // create class for holding view state
+            
             var loginView = new LoginView();
             loginView.Show();
-            loginView.IsVisibleChanged += (s, ev) =>
-            {
-                if (loginView.IsVisible == false && loginView.IsLoaded)
+
+                loginView.IsVisibleChanged += (s, ev) =>
                 {
-                    var buyerView = new BuyerView();
-                    buyerView.Show();
-                    loginView.Close();
-                }
-            };
+                        if (loginView.IsVisible == false && loginView.IsLoaded)
+                        {
+                            switch (loginView.txtUsername.Text)
+                            {
+                                case "buyer":
+                                    var buyerView = new BuyerView();
+                                    buyerView.Show();
+                                    loginView.Close();
+                                    break;
+
+                                case "planner":
+                                    break;
+
+                                case "admin":
+                                break;
+
+                                default:
+                                    break;
+                            }
+                        }
+
+                };
+
+
+
+
+
         }
     }
 }

@@ -58,7 +58,30 @@ namespace TMS.Repositories
 
         public UserModel GetByUserName(string userName)
         {
-            throw new NotImplementedException();
+            UserModel user = null;
+            using (var connection = GetConnection())
+            using (var command = new MySqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "select * from Users where UserName=@Username";
+                command.Parameters.Add("@Username", MySqlDbType.VarChar, 50).Value = userName;
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        user = new UserModel()
+                        {
+                            ID = reader[0].ToString(),
+                            Username = reader[1].ToString(),
+                            Password = String.Empty,
+                            LastName = reader[4].ToString(),
+                            FirstName = reader[3].ToString()
+                        };
+                    }
+                }
+            }
+            return user;
         }
 
         public void Remove(UserModel userModel)
