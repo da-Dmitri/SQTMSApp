@@ -126,4 +126,35 @@
         <Setter Property="Height" Value="16"/>
     </Style>
 
+    <!--Logout Button-->
+    <Style x:Key="logoutButton" TargetType="Button">
+        <!--Normal control button style-->
+        <Setter Property="Width" Value="50"/>
+        <Setter Property="Height" Value="50"/>
+        <Setter Property="Background" Value="IndianRed"/>
+        <Setter Property="Foreground" Value="{StaticResource plainTextColor1}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            Width="150"
+                            Height="40"
+                            CornerRadius="4"
+                            BorderBrush="{TemplateBinding BorderBrush}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+
+        <Style.Triggers>
+            <!--Logout Button style on hover-->
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource panelActiveColor}"/>
+                <Setter Property="Foreground" Value="{Binding Path=Tag, RelativeSource={RelativeSource Self}}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
 </ResourceDictionary>

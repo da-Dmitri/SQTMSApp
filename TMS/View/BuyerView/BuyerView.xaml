@@ -18,24 +18,15 @@
     </Window.DataContext>
 
     <Window.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisiblity2"/>
-        <DataTemplate DataType="{x:Type viewModel:HomeViewModel}">
-            <local:HomeViewBuyer/>
-        </DataTemplate>
 
-        <DataTemplate DataType="{x:Type viewModel:MarketPlaceViewModel}">
-            <local:MarketplaceView/>
-        </DataTemplate>
+        <!--<DataTemplate DataType="{x:Type viewModel:BuyerViewModel}">
+            <local:BuyerView/>
+        </DataTemplate>-->
 
-        <DataTemplate DataType="{x:Type viewModel:OrderViewModel}">
-            <local:OrderView/>
-        </DataTemplate>
+
 
     </Window.Resources>
-    <Window.Visibility>
-        <Binding Path="IsViewVisible" Mode="TwoWay" Converter="{StaticResource BooleanToVisiblity2}"/>
-    </Window.Visibility>
-
+    
     <Border CornerRadius="10"
             BorderThickness="1">
         
@@ -86,9 +77,7 @@
                     
                     <!--Menu Buttons-->
                     <RadioButton Style="{StaticResource menuButton}"
-                                 Tag="{StaticResource color8}"
-                                 Command="{Binding ShowHomeViewCommand}">
-                        
+                                 Tag="{StaticResource color8}">
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="Home" Style="{StaticResource menuButtonIcon}"/>
                             <TextBlock Style="{StaticResource menuButtonText}"
@@ -97,8 +86,7 @@
                     </RadioButton>
 
                     <RadioButton Style="{StaticResource menuButton}"
-                                 Tag="{StaticResource color8}"
-                                 Command="{Binding ShowMarketPlaceViewCommand}">
+                                 Tag="{StaticResource color8}">
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="Store" Style="{StaticResource menuButtonIcon}"/>
                             <TextBlock Style="{StaticResource menuButtonText}"
@@ -107,9 +95,7 @@
                     </RadioButton>
 
                     <RadioButton Style="{StaticResource menuButton}"
-                                 Tag="{StaticResource color8}"
-                                 Command="{Binding ShowOrdersViewCommand}">
-                        
+                                 Tag="{StaticResource color8}">
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="Book" Style="{StaticResource menuButtonIcon}"/>
                             <TextBlock Style="{StaticResource menuButtonText}"
@@ -118,45 +104,22 @@
                     </RadioButton>
 
 
-                    <Button x:Name="btnLogout"
-                        BorderThickness="0"
-                        Content="LOG OUT"
-                        Foreground="White"
-                        FontSize="12"
-                        FontFamily="Montserrat"
-                        Cursor="Hand"
-                        Grid.Column="2"
-                        Margin="0,200,0,0" Click="btnLogout_Click">
+                    <RadioButton Style="{StaticResource menuButton}"
+                                 Tag="{StaticResource color8}">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="PieChart" Style="{StaticResource menuButtonIcon}"/>
+                            <TextBlock Style="{StaticResource menuButtonText}"
+                                       Text="Report"/>
+                        </StackPanel>
+                    </RadioButton>
 
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Background" Value="#FA9284"/>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="#E06C78"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-
-                        <Button.Template>
-                            <ControlTemplate TargetType="Button">
-                                <Border Width="150"
-                                    Height="40"
-                                    CornerRadius="20"
-                                    Background="{TemplateBinding Property=Background}">
-                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Button.Template>
-
+                    <Button Height="35"
+                            Content="Log Out">
+                        
                     </Button>
 
 
-
-
-
-
+                    
 
 
                 </StackPanel>
@@ -225,12 +188,12 @@
                         </Grid.ColumnDefinitions>
 
                         <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
-                            <fa:IconImage Icon="{Binding Icon}"
+                            <fa:IconImage Icon="Home"
                                           Height="20"
                                           Width="20"
                                           Foreground="{StaticResource titleColor2}"
                                           Margin="35,0,10,0"/>
-                            <TextBlock Text="{Binding Caption}"
+                            <TextBlock Text="Dashboard"
                                        Foreground="{StaticResource titleColor2}"
                                        FontSize="16"
                                        FontFamily="Montserrat"
@@ -289,7 +252,7 @@
                     </Grid>
 
                     <!--Content section / Child views-->
-                    <ContentControl Content="{Binding CurrentChildView}"
+                    <ContentControl Content=""
                                     Grid.Row="2"
                                     Margin="15"/>
 
