@@ -9,7 +9,7 @@
 
 
     <Grid>
-        <Image Source="/Images/dashboard.png" Stretch="Uniform"/>
+        <Image Source="/Images/Dashboard-Buyer.png" Stretch="Uniform" Width="800" Height="450"/>
 
     </Grid>
 </UserControl>

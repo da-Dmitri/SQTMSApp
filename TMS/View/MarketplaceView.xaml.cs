@@ -74,7 +74,7 @@ namespace TMS.View
 
         private void AcceptContract()
         {
-            DataRowView row_selected = MarketPlace.SelectedItem as DataRowView;
+            DataRowView row_selected = MarketPlace.SelectedItem as DataRowView; // 0
             Contract contract = new Contract();
             contract.ClientName = row_selected["Client_Name"].ToString();
             contract.JobType = (int)row_selected["Job_Type"];

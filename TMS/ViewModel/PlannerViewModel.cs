@@ -9,6 +9,7 @@ namespace TMS.ViewModel
 {
     internal class PlannerViewModel
     {
+
         /* Declaring the necesary objects */
         internal MySqlConnection connection = null;
         internal MySqlCommand cmd = null;
@@ -119,5 +120,7 @@ namespace TMS.ViewModel
              * connection.Close() */
             return ret;
         }
+
+
     }
 }
