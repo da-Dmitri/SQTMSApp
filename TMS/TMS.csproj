@@ -99,6 +99,7 @@
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MarketplaceViewModel.cs" />
     <Compile Include="ViewModel\OrderVIewModel.cs" />
+    <Compile Include="ViewModel\PlannerViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\ViewModelCommand.cs" />
     <Compile Include="View\BuyerView.xaml.cs">
