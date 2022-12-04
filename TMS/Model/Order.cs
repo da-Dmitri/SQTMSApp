@@ -14,8 +14,9 @@ using System.Threading.Tasks;
 
 namespace TMS.Model {
 
-    public enum Status {
-        AwaitingApproval,
+    public enum OrderStatus {
+        Default,
+        Accepted,
         Schedueled,
         Delivered,
         Completed
@@ -23,8 +24,21 @@ namespace TMS.Model {
 
     internal class Order {
 
-        public Status OrderStatus {get; set;}
+        public OrderStatus Status {get; set;}
 
+        //the contract information
+        public Contract Contract {get; set;}
 
+        private Order() {}
+
+        public Order(Contract input) {
+            Contract = input;
+            Status = OrderStatus.Default;
+        }
+
+        public Order(Contract input, OrderStatus status) {
+            Contract = input;
+            Status = status;
+        }
     }
 }
