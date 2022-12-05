@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TMS.View;
 
 namespace TMS.ViewModel
 {
-    public class HomeViewModel : ViewModelBase
+    internal class CustomerViewModel : ViewModelBase
     {
-       
     }
 }

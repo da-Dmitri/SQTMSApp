@@ -61,10 +61,12 @@ namespace TMS.Model
             cmd.ExecuteNonQuery();
 
 
-            // get carrier rate
-            // multiply carrier rate by km
+
 
         }
+
+
+
 
     }
 }

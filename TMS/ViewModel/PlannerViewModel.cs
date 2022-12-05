@@ -25,7 +25,6 @@ namespace TMS.ViewModel
 
 
 
-        public PlannerViewModel(string thePassword)
         private UserAccountModel _currentUserAccount;
         private ViewModelBase _currentChildView;
         private string _caption;
@@ -66,7 +65,7 @@ namespace TMS.ViewModel
         }
 
         // commands
-        public ICommand ShowHomeViewCommand { get; }
+        public ICommand ShowCompletedOrdersCommand { get; }
         public ICommand ShowActiveOrderViewCommand { get; }
 
         public PlannerViewModel()
@@ -74,7 +73,7 @@ namespace TMS.ViewModel
             userRepository = new UserRepository();
             CurrentUserAccount = new UserAccountModel();
 
-            ShowHomeViewCommand = new ViewModelCommand(ExecuteShowHomeViewCommand);
+            ShowCompletedOrdersCommand = new ViewModelCommand(ExecuteShowCompletedOrdersCommand);
             ShowActiveOrderViewCommand = new ViewModelCommand(ExecuteShowActiveOrderCommand);
 
             ExecuteShowActiveOrderCommand(null);
@@ -88,15 +87,17 @@ namespace TMS.ViewModel
 
         private void ExecuteShowActiveOrderCommand(object obj)
         {
-            CurrentChildView = new OrderViewModel();
+            CurrentChildView = new ActiveOrderViewModel();
             Caption = "Orders";
             Icon = IconChar.Book;
 
         }
 
-        private void ExecuteShowHomeViewCommand(object obj)
+        private void ExecuteShowCompletedOrdersCommand(object obj)
         {
-            throw new NotImplementedException();
+            CurrentChildView = new CompletedOrdersViewModel();
+            Caption = "Completed Orders";
+            Icon = IconChar.Check;
         }
 
         public PlannerViewModel(string thePassword, string theTable)
@@ -195,19 +196,36 @@ namespace TMS.ViewModel
                                        string theOrigin,
                                        string theDestination)
         {
-            string currentCity;
+            //string currentCity;
 
-            //cmd.CommandText = "INSERT INTO trips (OrderNumber, CarrierNumber, Origin, Destination) " +
-            //                  "Values(" + theOrderNum.ToString() + ", " + theCarrier.ToString() +
-            //                  ", '" + theOrigin + "', '" + theDestination + "');";
+            cmd.CommandText = "INSERT INTO trips (OrderNumber, CarrierNumber, Origin, Destination) " +
+                              "Values(" + theOrderNum.ToString() + ", " + theCarrier.ToString() +
+                              ", '" + theOrigin + "', '" + theDestination + "');";
 
             // FTL will have no stop till destination
             // LTL will stop at every city in route till destination
-            string destination;
-            while(currentcity == destination) 
-            {
-                cmd.CommandText = "SELECT Origin FROM acceptedContracts "
-            }
+            //string destination;
+            //while(currentcity == destination) 
+            //{
+            //    cmd.CommandText = "SELECT Origin FROM acceptedContracts "
+            //}
+
+            MySqlConnection ret = connection;
+
+            /* Back to the place where the return is accepted, we would do
+             * connection.Open();
+             * 
+             * make use of the info
+             * when done using it
+             * 
+             * connection.Close() */
+            return ret;
+        }
+
+        public MySqlConnection CompleteOrder(int orderNumber)
+        {
+            cmd.CommandText = "UPDATE acceptedcontracts SET Completed = 'True' WHERE OrderNumber =" +
+                              orderNumber + ";";
 
             MySqlConnection ret = connection;
 

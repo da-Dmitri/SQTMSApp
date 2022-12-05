@@ -25,6 +25,8 @@ namespace TMS.View
     /// <summary>
     /// Interaction logic for MarketplaceView.xaml
     /// </summary>
+    /// 
+
     public partial class MarketplaceView : UserControl
     {
         private string myConnectionString;
@@ -41,7 +43,7 @@ namespace TMS.View
 
             this.DataContext = marketPlaceViewModel;
             
-    }
+        }
 
 
         private void btnAcceptContract_Click(object sender, RoutedEventArgs e)
@@ -74,7 +76,7 @@ namespace TMS.View
 
         private void AcceptContract()
         {
-            DataRowView row_selected = MarketPlace.SelectedItem as DataRowView; // 0
+            DataRowView row_selected = MarketPlace.SelectedItem as DataRowView; 
             Contract contract = new Contract();
             contract.ClientName = row_selected["Client_Name"].ToString();
             contract.JobType = (int)row_selected["Job_Type"];
@@ -97,6 +99,7 @@ namespace TMS.View
    
             connection.Open();
             cmd.ExecuteNonQuery();
+            connection.Close();
         }
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)

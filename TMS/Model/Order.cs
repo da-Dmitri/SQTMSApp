@@ -25,7 +25,7 @@ namespace TMS.Model
         Completed
     }
 
-    internal class Order
+    public class Order
     {
 
         public OrderStatus Status { get; set; }
@@ -34,12 +34,12 @@ namespace TMS.Model
         public Contract Contract { get; set; }
 
         //trips assigned to this order with trip id as the key
-        public Dictionary<int, Trip> AssignedTrips { get; set; }
+        public Dictionary<int, Trips> AssignedTrips { get; set; }
 
         //relevant cities for the order, with city name as the key
         public Dictionary<string, City> RelevantCities { get; set; }
 
-        private Order() { }
+        public Order() { }
 
         public Order(Contract input)
         {

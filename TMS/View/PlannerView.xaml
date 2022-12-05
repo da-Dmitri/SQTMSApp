@@ -27,8 +27,12 @@
             <local:MarketplaceView/>
         </DataTemplate>-->
 
-        <DataTemplate DataType="{x:Type viewModel:OrderViewModel}">
-            <local:OrderView/>
+        <DataTemplate DataType="{x:Type viewModel:ActiveOrderViewModel}">
+            <local:ActiveOrderView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:CompletedOrdersViewModel}">
+            <local:CompletedOrders/>
         </DataTemplate>
 
     </Window.Resources>
@@ -91,8 +95,19 @@
                                        Text="Active Orders"/>
                         </StackPanel>
                     </RadioButton>
-                    
-                    
+
+                    <RadioButton Style="{StaticResource menuButton}"
+                                 Tag="{StaticResource color8}"
+                                 Command="{Binding ShowCompletedOrdersCommand}">
+
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="Check" Style="{StaticResource menuButtonIcon}"/>
+                            <TextBlock Style="{StaticResource menuButtonText}"
+                                       Text="Completed Orders"/>
+                        </StackPanel>
+                    </RadioButton>
+
+
                     <Button x:Name="btnLogout"
                         BorderThickness="0"
                         Content="LOG OUT"
@@ -101,7 +116,7 @@
                         FontFamily="Montserrat"
                         Cursor="Hand"
                         Grid.Column="2"
-                        Margin="0,200,0,0" Click="btnLogout_Click">
+                        Margin="0,150,0,0" Click="btnLogout_Click">
 
                         <Button.Style>
                             <Style TargetType="Button">
@@ -157,6 +172,8 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel x:Name="pnlControlBar"
+                                MouseLeftButtonDown="pnlControlBar_MouseLeftButtonDown"
+                                MouseEnter="pnlControlBar_MouseEnter"
                                 Grid.Row="0"
                                 Orientation="Horizontal"
                                 FlowDirection="RightToLeft"
