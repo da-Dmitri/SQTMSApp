@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TMS.ViewModel;
 
 namespace TMS.Model
 {
@@ -31,6 +32,12 @@ namespace TMS.Model
 
         //the contract information
         public Contract Contract { get; set; }
+
+        //trips assigned to this order with trip id as the key
+        public Dictionary<int, Trip> AssignedTrips { get; set; }
+
+        //relevant cities for the order, with city name as the key
+        public Dictionary<string, City> RelevantCities { get; set; }
 
         private Order() { }
 
