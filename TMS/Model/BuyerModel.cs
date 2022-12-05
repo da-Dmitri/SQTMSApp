@@ -37,6 +37,11 @@ namespace TMS.Model
 
         }
 
+        public BuyerModel()
+        {
+
+        }
+
 
 
         public void CreateOrder(Contract contract)
@@ -95,8 +100,8 @@ namespace TMS.Model
             */
             // updating order status
             MySqlConnection connection = new MySqlConnection(myConnectionString);
-            string queryString = "UPDATE acceptedcontracts SET  Completed = Invoice Sent" +
-                                 "WHERE OrderNumber = " + order + ";";
+            string queryString = "UPDATE acceptedcontracts SET  Completed = 'Invoice Sent'" +
+                                 " WHERE OrderNumber = " + order + ";";
 
             MySqlCommand cmd = new MySqlCommand(queryString, connection);
 
@@ -194,9 +199,10 @@ namespace TMS.Model
             {
                 i++;
             }
+            
             string filePath = "Invoice" + i.ToString() + ".txt";
             fs = File.Create(filePath);
-            
+            fs.Close();
             double carrierFee = 319 * 5.21;
             double reefercharge = carrierFee * 0.08;
             double servicefee = carrierFee * 0.08;

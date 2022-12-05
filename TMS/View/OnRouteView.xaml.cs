@@ -79,7 +79,7 @@ namespace TMS.View
                 plannerViewModel.CompleteOrder(orderNum);
 
                 BuyerModel buyerModel = new BuyerModel();
-
+                buyerModel.CompleteOrder(orderNum);
                 trips.DataContext = GetTrips();
 
             }
