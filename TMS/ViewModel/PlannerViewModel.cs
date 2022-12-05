@@ -222,7 +222,7 @@ namespace TMS.ViewModel
                 { "Oshawa", "Planet Express" },
                 { "Belleville", "Planet Express" },
                 { "Ottawa", "We Haul" },
-                { "Kingston", "Schooner's" },
+                { "Kingston", "Schooner s" },
                 { "London", "Tillman Transport" },
                 { "Toronto", "We Haul" }
             };
@@ -260,10 +260,13 @@ namespace TMS.ViewModel
 
             string currentLocationWest = origin;
             string currentLocationEast = origin;
-            double hoursEast = 0;
-            double hoursWest = 0;
-            int kmEast = 0;
-            int kmWest = 0;
+            
+            Cities.TryGetValue(origin, out City tempEast);
+            Cities.TryGetValue(origin, out City tempWest);
+            int kmEast = tempEast.KMs;
+            int kmWest = tempWest.KMs;
+            double hoursEast = tempEast.Time;
+            double hoursWest = tempWest.Time;
             /* We are processing FTL trips */
             if (jobType >= 0)
             {
@@ -301,7 +304,12 @@ namespace TMS.ViewModel
                     {
                         if (nextEast.East == destination)
                         {
+                            hoursEast += nextEast.Time;
+                            kmEast += nextEast.KMs;
                             string theCarrier;
+                            Cities.TryGetValue(destination, out City tempKms);
+                            hoursEast += tempKms.Time;
+                            kmEast += tempKms.KMs;
                             carriers.TryGetValue(origin, out theCarrier);
                             cmd.CommandText = "INSERT trips (OrderNumber, CarrierName, Origin, Destination, Kilometers, Time) " +
                               "VALUES (" + theOrderNum.ToString() + ", '" + theCarrier + "', '" +
@@ -313,7 +321,12 @@ namespace TMS.ViewModel
                         }
                         if (nextWest.West == destination)
                         {
+                            hoursWest += nextWest.Time;
+                            kmWest += nextWest.KMs;
                             string theCarrier;
+                            Cities.TryGetValue(destination, out City tempKms);
+                            hoursWest += tempKms.Time;
+                            kmEast += tempKms.KMs;
                             carriers.TryGetValue(origin, out theCarrier);
                             cmd.CommandText = "INSERT trips (OrderNumber, CarrierName, Origin, Destination, Kilometers, Time) " +
                               "VALUES (" + theOrderNum.ToString() + ", '" + theCarrier + "', '" +
