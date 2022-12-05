@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data.Sql;
 using MySqlConnector;
 using System.Windows;
+using System.Configuration;
 
 namespace TMS.Repositories
 {
@@ -17,7 +18,7 @@ namespace TMS.Repositories
 
         public RepositoryBase()
         {
-            myConnectionString = "server=127.0.0.1;uid=root;" + "pwd=gupajuse7256;database=loginDb";
+            myConnectionString = ConfigurationManager.AppSettings.Get("userDatabase");
         }
         protected MySqlConnection GetConnection()
         {
