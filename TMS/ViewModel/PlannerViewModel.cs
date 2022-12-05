@@ -25,7 +25,6 @@ namespace TMS.ViewModel
 
 
 
-        public PlannerViewModel(string thePassword)
         private UserAccountModel _currentUserAccount;
         private ViewModelBase _currentChildView;
         private string _caption;
@@ -88,7 +87,7 @@ namespace TMS.ViewModel
 
         private void ExecuteShowActiveOrderCommand(object obj)
         {
-            CurrentChildView = new OrderViewModel();
+            CurrentChildView = new ActiveOrderViewModel();
             Caption = "Orders";
             Icon = IconChar.Book;
 
@@ -195,19 +194,19 @@ namespace TMS.ViewModel
                                        string theOrigin,
                                        string theDestination)
         {
-            string currentCity;
+            //string currentCity;
 
-            //cmd.CommandText = "INSERT INTO trips (OrderNumber, CarrierNumber, Origin, Destination) " +
-            //                  "Values(" + theOrderNum.ToString() + ", " + theCarrier.ToString() +
-            //                  ", '" + theOrigin + "', '" + theDestination + "');";
+            cmd.CommandText = "INSERT INTO trips (OrderNumber, CarrierNumber, Origin, Destination) " +
+                              "Values(" + theOrderNum.ToString() + ", " + theCarrier.ToString() +
+                              ", '" + theOrigin + "', '" + theDestination + "');";
 
             // FTL will have no stop till destination
             // LTL will stop at every city in route till destination
-            string destination;
-            while(currentcity == destination) 
-            {
-                cmd.CommandText = "SELECT Origin FROM acceptedContracts "
-            }
+            //string destination;
+            //while(currentcity == destination) 
+            //{
+            //    cmd.CommandText = "SELECT Origin FROM acceptedContracts "
+            //}
 
             MySqlConnection ret = connection;
 

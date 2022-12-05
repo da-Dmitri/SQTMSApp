@@ -27,8 +27,8 @@
             <local:MarketplaceView/>
         </DataTemplate>-->
 
-        <DataTemplate DataType="{x:Type viewModel:OrderViewModel}">
-            <local:OrderView/>
+        <DataTemplate DataType="{x:Type viewModel:ActiveOrderViewModel}">
+            <local:ActiveOrderView/>
         </DataTemplate>
 
     </Window.Resources>

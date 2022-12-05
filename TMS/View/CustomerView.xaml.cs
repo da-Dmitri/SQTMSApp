@@ -19,18 +19,22 @@ using TMS.ViewModel;
 namespace TMS.View
 {
     /// <summary>
-    /// Interaction logic for OrderView.xaml
+    /// Interaction logic for CustomerView.xaml
     /// </summary>
-    public partial class OrderView : UserControl
+    public partial class CustomerView : UserControl
     {
-        private readonly OrderViewModel orderViewModel;
-        public OrderView()
+
+        private string myConnectionString;
+        private readonly CustomerViewModel customerViewModel;
+
+        public CustomerView()
         {
-            this.orderViewModel = new OrderViewModel();
+            this.customerViewModel = new CustomerViewModel();
             InitializeComponent();
 
-           AcceptedContracts.DataContext = GetAcceptedContracts();
-           this.DataContext = orderViewModel;
+            Customers.DataContext = GetAcceptedContracts();
+
+            this.DataContext = customerViewModel;
         }
 
         private DataTable GetAcceptedContracts()
@@ -39,7 +43,7 @@ namespace TMS.View
 
             MySqlConnection connection = new MySqlConnection(myConnectionString);
 
-            MySqlCommand cmd = new MySqlCommand("SELECT * FROM acceptedcontracts group by Client_Name", connection);
+            MySqlCommand cmd = new MySqlCommand("SELECT Client_Name FROM acceptedcontracts group by Client_Name", connection);
             connection.Open();
             DataTable dt = new DataTable();
             dt.Load(cmd.ExecuteReader());
@@ -48,9 +52,9 @@ namespace TMS.View
             return dt;
         }
 
-        private void btnRefreshOrder_Click(object sender, RoutedEventArgs e)
+        private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
-            AcceptedContracts.DataContext = GetAcceptedContracts();
+            Customers.DataContext = GetAcceptedContracts();
         }
     }
 }
