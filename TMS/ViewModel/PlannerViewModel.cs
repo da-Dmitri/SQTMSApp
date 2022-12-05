@@ -121,29 +121,29 @@ namespace TMS.ViewModel
             Icon = IconChar.Check;
         }
 
-        public PlannerViewModel(string thePassword)
-        {
-            string connectString = "SERVER=server=127.0.0.1;uid=root;pwd=" + thePassword +
-                                   ";database=contracts;";
+        //public PlannerViewModel(string thePassword)
+        //{
+        //    string connectString = "SERVER=server=127.0.0.1;uid=root;pwd=" + thePassword +
+        //                           ";database=contracts;";
             
-            connection = new MySqlConnection(connectString);
-            CitiesSetup();
-            cmd = new MySqlCommand();
-            cmd.Connection = connection;
-        }
+        //    connection = new MySqlConnection(connectString);
+        //    CitiesSetup();
+        //    cmd = new MySqlCommand();
+        //    cmd.Connection = connection;
+        //}
 
-        public PlannerViewModel(string theServer, string theDatabase,
-                                string theUID, string thePassword)
-        {
-            string connectString = "SERVER=" + theServer + ";" +
-                                   "DATABASE=" + theDatabase + ";" +
-                                   "UID=" + theUID + ";" +
-                                   "PASSWORD" + thePassword + ";";
-            CitiesSetup();
-            connection = new MySqlConnection(connectString);
-            cmd = new MySqlCommand();
-            cmd.Connection = connection;
-        }
+        //public PlannerViewModel(string theServer, string theDatabase,
+        //                        string theUID, string thePassword)
+        //{
+        //    string connectString = "SERVER=" + theServer + ";" +
+        //                           "DATABASE=" + theDatabase + ";" +
+        //                           "UID=" + theUID + ";" +
+        //                           "PASSWORD" + thePassword + ";";
+        //    CitiesSetup();
+        //    connection = new MySqlConnection(connectString);
+        //    cmd = new MySqlCommand();
+        //    cmd.Connection = connection;
+        //}
 
 
         public void CitiesSetup()

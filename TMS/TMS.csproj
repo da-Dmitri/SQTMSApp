@@ -251,5 +251,8 @@
   <ItemGroup>
     <Resource Include="Images\Dashboard-Buyer.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Invoices\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
