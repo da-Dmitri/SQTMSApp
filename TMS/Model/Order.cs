@@ -25,7 +25,7 @@ namespace TMS.Model
         Completed
     }
 
-    internal class Order
+    public class Order
     {
 
         public OrderStatus Status { get; set; }
