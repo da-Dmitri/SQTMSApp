@@ -65,7 +65,7 @@ namespace TMS.ViewModel
         }
 
         // commands
-        public ICommand ShowHomeViewCommand { get; }
+        public ICommand ShowCompletedOrdersCommand { get; }
         public ICommand ShowActiveOrderViewCommand { get; }
 
         public PlannerViewModel()
@@ -73,7 +73,7 @@ namespace TMS.ViewModel
             userRepository = new UserRepository();
             CurrentUserAccount = new UserAccountModel();
 
-            ShowHomeViewCommand = new ViewModelCommand(ExecuteShowHomeViewCommand);
+            ShowCompletedOrdersCommand = new ViewModelCommand(ExecuteShowCompletedOrdersCommand);
             ShowActiveOrderViewCommand = new ViewModelCommand(ExecuteShowActiveOrderCommand);
 
             ExecuteShowActiveOrderCommand(null);
@@ -93,9 +93,11 @@ namespace TMS.ViewModel
 
         }
 
-        private void ExecuteShowHomeViewCommand(object obj)
+        private void ExecuteShowCompletedOrdersCommand(object obj)
         {
-            throw new NotImplementedException();
+            CurrentChildView = new CompletedOrdersViewModel();
+            Caption = "Completed Orders";
+            Icon = IconChar.Check;
         }
 
         public PlannerViewModel(string thePassword, string theTable)
@@ -207,6 +209,23 @@ namespace TMS.ViewModel
             //{
             //    cmd.CommandText = "SELECT Origin FROM acceptedContracts "
             //}
+
+            MySqlConnection ret = connection;
+
+            /* Back to the place where the return is accepted, we would do
+             * connection.Open();
+             * 
+             * make use of the info
+             * when done using it
+             * 
+             * connection.Close() */
+            return ret;
+        }
+
+        public MySqlConnection CompleteOrder(int orderNumber)
+        {
+            cmd.CommandText = "UPDATE acceptedcontracts SET Completed = 'True' WHERE OrderNumber =" +
+                              orderNumber + ";";
 
             MySqlConnection ret = connection;
 

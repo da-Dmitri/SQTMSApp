@@ -74,6 +74,7 @@ namespace TMS.ViewModel
         public ICommand ShowOrdersViewCommand { get; }
         public ICommand LogoutCommand { get; }
         public ICommand ShowCustomerViewCommand { get; }
+        public ICommand ShowCompletedOrdersCommand { get; }
 
 
         public BuyerViewModel()
@@ -88,11 +89,19 @@ namespace TMS.ViewModel
             ShowOrdersViewCommand = new ViewModelCommand(ExecuteShowOrdersViewCommand);
             LogoutCommand = new ViewModelCommand(ExecuteLogoutCommand);
             ShowCustomerViewCommand = new ViewModelCommand(ExecuteShowCustomerViewCommand);
+            ShowCompletedOrdersCommand = new ViewModelCommand(ExecuteShowCompletedOrdersCommand);
 
             // defualt view
             ExecuteShowHomeViewCommand(null);
 
             LoadCurrentUserData();
+        }
+
+        private void ExecuteShowCompletedOrdersCommand(object obj)
+        {
+            CurrentChildView = new CompletedOrdersViewModel();
+            Caption = "Completed Orders";
+            Icon = IconChar.Check;
         }
 
         private void ExecuteShowCustomerViewCommand(object obj)

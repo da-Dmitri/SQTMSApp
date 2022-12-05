@@ -35,6 +35,10 @@
             <local:CustomerView/>
         </DataTemplate>
 
+        <DataTemplate DataType="{x:Type viewModel:CompletedOrdersViewModel}">
+            <local:CompletedOrders/>
+        </DataTemplate>
+
     </Window.Resources>
     <Window.Visibility>
         <Binding Path="IsViewVisible" Mode="TwoWay" Converter="{StaticResource BooleanToVisiblity2}"/>
@@ -132,6 +136,17 @@
                         </StackPanel>
                     </RadioButton>
 
+                    <RadioButton Style="{StaticResource menuButton}"
+                                 Tag="{StaticResource color8}"
+                                 Command="{Binding ShowCompletedOrdersCommand}">
+
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="Check" Style="{StaticResource menuButtonIcon}"/>
+                            <TextBlock Style="{StaticResource menuButtonText}"
+                                       Text="Completed Orders"/>
+                        </StackPanel>
+                    </RadioButton>
+
 
                     <Button x:Name="btnLogout"
                         BorderThickness="0"
@@ -141,7 +156,7 @@
                         FontFamily="Montserrat"
                         Cursor="Hand"
                         Grid.Column="2"
-                        Margin="0,150,0,0" Click="btnLogout_Click">
+                        Margin="0,100,0,0" Click="btnLogout_Click">
 
                         <Button.Style>
                             <Style TargetType="Button">
