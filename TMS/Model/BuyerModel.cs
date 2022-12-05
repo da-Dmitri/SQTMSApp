@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Interop;
 
 namespace TMS.Model
 {
@@ -30,7 +30,7 @@ namespace TMS.Model
 
         // functions
 
-        public BuyerModel(string username, string password, string lastName, int id)
+        public BuyerModel(string username, string password, string lastName, string id)
         {
             this.Username = username;
             this.Password = password;
@@ -60,16 +60,6 @@ namespace TMS.Model
         }
 
 
-        public void ReceiveContracts()
-        {
-
-            // request contracts from the communications class, store in dictionary?
-            // need to know how communications works, if dictionary can be passed as parameter or if
-            // dictionary can be assigned from return value
-            //Contracts = Communications.ReceiveContracts(Contracts);
-
-        }
-
         public void ViewCustomers()
         {
 
@@ -79,7 +69,7 @@ namespace TMS.Model
 
         }
 
-        public void AddCustomer(string contractKey)
+        public void AddCustomer(Contract contract)
         {
 
             // get customer info from contract(?), send it to the local database to be added
@@ -88,7 +78,7 @@ namespace TMS.Model
 
         }
 
-        public void CreateOrder(string contractKey)
+        public void CreateOrder(Contract contract)
         {
 
             // create a new Order class for the given contract, then send it to SelectCities()
@@ -100,7 +90,7 @@ namespace TMS.Model
 
         }
 
-        public void SelectCities(string Orig, string Dest)
+        internal void SelectCities(Order order)
         {
 
             // add relevant cities to the Order, then put the order in the active orders dictionary?
@@ -109,8 +99,8 @@ namespace TMS.Model
             orderCities.Clear();
             
             // get contract's origin point and destination
-            string orig = Orig;
-            string dest = Dest;
+            string orig = order.Contract.Origin;
+            string dest = order.Contract.Destination;
             int start = -1;
             int end = -1;
 
@@ -193,11 +183,11 @@ namespace TMS.Model
         {
 
             // grab the completed orders dictionary, to be displayed
-            // may need to call planner or something
+            
 
         }
 
-        public void CompleteOrder(string orderKey)
+        internal void CompleteOrder(Order order)
         {
 
             // generate an invoice for a completed order
