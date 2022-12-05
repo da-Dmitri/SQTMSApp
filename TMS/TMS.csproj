@@ -91,6 +91,7 @@
     </Compile>
     <Compile Include="Model\Contract.cs" />
     <Compile Include="Model\IUserRepository.cs" />
+    <Compile Include="Model\Order.cs" />
     <Compile Include="Model\UserAccountModel.cs" />
     <Compile Include="Model\UserModel.cs" />
     <Compile Include="Repositories\RepositoryBase.cs" />

@@ -12,9 +12,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TMS.Model {
+namespace TMS.Model
+{
 
-    public enum OrderStatus {
+    public enum OrderStatus
+    {
         Default,
         Accepted,
         Schedueled,
@@ -22,21 +24,24 @@ namespace TMS.Model {
         Completed
     }
 
-    internal class Order {
+    internal class Order
+    {
 
-        public OrderStatus Status {get; set;}
+        public OrderStatus Status { get; set; }
 
         //the contract information
-        public Contract Contract {get; set;}
+        public Contract Contract { get; set; }
 
-        private Order() {}
+        private Order() { }
 
-        public Order(Contract input) {
+        public Order(Contract input)
+        {
             Contract = input;
             Status = OrderStatus.Default;
         }
 
-        public Order(Contract input, OrderStatus status) {
+        public Order(Contract input, OrderStatus status)
+        {
             Contract = input;
             Status = status;
         }
