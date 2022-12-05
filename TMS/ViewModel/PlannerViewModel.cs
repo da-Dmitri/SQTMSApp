@@ -4,10 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MySqlConnector;
+using TMS.Model;
+using TMS.Repositories;
+using TMS.View;
+using FontAwesome.Sharp;
+using System.Windows;
+using System.Windows.Input;
+using System.Threading;
 
 namespace TMS.ViewModel
 {
-    internal class PlannerViewModel
+    internal class PlannerViewModel : ViewModelBase
     {
 
         /* Declaring the necesary objects */
@@ -17,7 +24,82 @@ namespace TMS.ViewModel
         public Dictionary<string, City> Cities;
 
 
+
         public PlannerViewModel(string thePassword)
+        private UserAccountModel _currentUserAccount;
+        private ViewModelBase _currentChildView;
+        private string _caption;
+        private IconChar _icon;
+        private IUserRepository userRepository;
+
+
+        // Properties
+        public UserAccountModel CurrentUserAccount
+        {
+            get { return _currentUserAccount; }
+            set
+            {
+                _currentUserAccount = value;
+                OnPropertyChanged(nameof(CurrentUserAccount));
+            }
+        }
+
+        public ViewModelBase CurrentChildView
+        {
+            get { return _currentChildView; }
+            set
+            {
+                _currentChildView = value;
+                OnPropertyChanged(nameof(CurrentChildView));
+            }
+        }
+
+        public string Caption
+        {
+            get { return _caption; }
+            set { _caption = value; OnPropertyChanged(nameof(Caption)); }
+        }
+        public IconChar Icon
+        {
+            get { return _icon; }
+            set { _icon = value; OnPropertyChanged(nameof(Icon)); }
+        }
+
+        // commands
+        public ICommand ShowHomeViewCommand { get; }
+        public ICommand ShowActiveOrderViewCommand { get; }
+
+        public PlannerViewModel()
+        {
+            userRepository = new UserRepository();
+            CurrentUserAccount = new UserAccountModel();
+
+            ShowHomeViewCommand = new ViewModelCommand(ExecuteShowHomeViewCommand);
+            ShowActiveOrderViewCommand = new ViewModelCommand(ExecuteShowActiveOrderCommand);
+
+            ExecuteShowActiveOrderCommand(null);
+
+
+            LoadCurrentUserData();
+
+        }
+
+
+
+        private void ExecuteShowActiveOrderCommand(object obj)
+        {
+            CurrentChildView = new OrderViewModel();
+            Caption = "Orders";
+            Icon = IconChar.Book;
+
+        }
+
+        private void ExecuteShowHomeViewCommand(object obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        public PlannerViewModel(string thePassword, string theTable)
         {
             string connectString = "SERVER=server=127.0.0.1;uid=root;pwd=" + thePassword +
                                    ";database=contracts;";
@@ -54,6 +136,24 @@ namespace TMS.ViewModel
             this.Cities.Add("Ottawa", new City("Ottawa", 0, 0, "Kingston", "END"));
         }
 
+
+        private void LoadCurrentUserData()
+        {
+            var user = userRepository.GetByUserName(Thread.CurrentPrincipal.Identity.Name);
+            if (user != null)
+            {
+                {
+                    CurrentUserAccount.UserName = user.Username;
+                    CurrentUserAccount.DisplayName = $"{user.FirstName} {user.LastName}";
+                    CurrentUserAccount.ProfilePicture = null;
+                };
+            }
+            else
+            {
+                CurrentUserAccount.DisplayName = "User not logged in";
+                // Hide child views.
+            }
+        }
 
         public MySqlConnection GetOrderSummary()
         {

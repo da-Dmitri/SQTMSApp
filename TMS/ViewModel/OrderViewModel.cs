@@ -8,5 +8,6 @@ namespace TMS.ViewModel
 {
     public class OrderViewModel : ViewModelBase
     {
+
     }
 }

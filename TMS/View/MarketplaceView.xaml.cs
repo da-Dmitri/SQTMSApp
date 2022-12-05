@@ -86,8 +86,15 @@ namespace TMS.View
             myConnectionString = "server=127.0.0.1;uid=root;" + "pwd=gupajuse7256;database=contracts";
 
             MySqlConnection connection = new MySqlConnection(myConnectionString);
+            string queryString = "INSERT INTO acceptedcontracts (Client_Name, Job_Type, Quantity, Origin, Destination, Van_Type) " +
+                                 "VALUES ('" + contract.ClientName + "', " + contract.JobType.ToString() + ", " +
+                                 contract.Quantity.ToString() + ", '" + contract.Origin + "', '" + contract.Destination + "', " +
+                                 contract.Van_Type.ToString() + ");";
 
-            MySqlCommand cmd = new MySqlCommand($"INSERT INTO acceptedcontracts VALUES (\"{contract.ClientName}\",{contract.JobType},{contract.Quantity},\"{contract.Origin}\",\"{contract.Destination}\",{contract.Van_Type});", connection);
+            MySqlCommand cmd = new MySqlCommand(queryString, connection);
+
+
+   
             connection.Open();
             cmd.ExecuteNonQuery();
         }

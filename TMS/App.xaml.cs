@@ -28,19 +28,23 @@ namespace TMS
                         {
                             switch (loginView.txtUsername.Text)
                             {
-                                case "buyer":
-                                    var buyerView = new BuyerView();
-                                    buyerView.Show();
-                                    loginView.Close();
-                                    break;
 
-                                case "planner":
-                                    break;
-
-                                case "admin":
+                            case "buyer":
+                                var buyerView = new BuyerView();
+                                buyerView.Show();
+                                loginView.Close();
                                 break;
 
-                                default:
+                            case "planner":
+                                var plannerView = new PlannerView();
+                                plannerView.Show();
+                                loginView.Close();
+                                break;
+
+                            case "admin":
+                            break;
+
+                            default:
                                     break;
                             }
                         }

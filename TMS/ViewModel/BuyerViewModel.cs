@@ -37,7 +37,7 @@ namespace TMS.ViewModel
             }
         }
 
-        // properties
+  
         public ViewModelBase CurrentChildView
         {
             get { return _currentChildView; }
