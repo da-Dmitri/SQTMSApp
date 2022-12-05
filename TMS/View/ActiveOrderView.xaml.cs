@@ -67,7 +67,7 @@ namespace TMS.View
             
 
             plannerViewModel = new PlannerViewModel();
-            plannerViewModel.CompleteOrder(orderNum);
+            plannerViewModel.AddTrip(orderNum);
             AcceptedContracts.DataContext = GetAcceptedContracts();
             // Order object
             // Contract

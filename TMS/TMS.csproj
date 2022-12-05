@@ -107,6 +107,7 @@
     <Compile Include="ViewModel\HomeViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MarketplaceViewModel.cs" />
+    <Compile Include="ViewModel\OnRouteViewModel.cs" />
     <Compile Include="ViewModel\OrderVIewModel.cs" />
     <Compile Include="ViewModel\PlannerViewModel.cs" />
     <Compile Include="ViewModel\Trips.cs" />
@@ -132,6 +133,9 @@
     </Compile>
     <Compile Include="View\MarketplaceView.xaml.cs">
       <DependentUpon>MarketplaceView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\OnRouteView.xaml.cs">
+      <DependentUpon>OnRouteView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\OrderView.xaml.cs">
       <DependentUpon>OrderView.xaml</DependentUpon>
@@ -180,6 +184,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MarketplaceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\OnRouteView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

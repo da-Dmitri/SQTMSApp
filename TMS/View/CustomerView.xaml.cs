@@ -25,7 +25,6 @@ namespace TMS.View
     public partial class CustomerView : UserControl
     {
 
-        private string myConnectionString;
         private readonly CustomerViewModel customerViewModel;
 
         public CustomerView()

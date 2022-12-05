@@ -35,6 +35,10 @@
             <local:CompletedOrders/>
         </DataTemplate>
 
+        <DataTemplate DataType="{x:Type viewModel:OnRouteViewModel}">
+            <local:OnRouteView/>
+        </DataTemplate>
+
     </Window.Resources>
 
 
@@ -95,6 +99,18 @@
                                        Text="Active Orders"/>
                         </StackPanel>
                     </RadioButton>
+                    
+                    <RadioButton Style="{StaticResource menuButton}"
+                                 Tag="{StaticResource color8}"
+                                 Command="{Binding ShowOnRouteViewCommand}">
+
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="Truck" Style="{StaticResource menuButtonIcon}"/>
+                            <TextBlock Style="{StaticResource menuButtonText}"
+                                       Text="OnRoute"/>
+                        </StackPanel>
+                    </RadioButton>
+
 
                     <RadioButton Style="{StaticResource menuButton}"
                                  Tag="{StaticResource color8}"
@@ -116,7 +132,7 @@
                         FontFamily="Montserrat"
                         Cursor="Hand"
                         Grid.Column="2"
-                        Margin="0,265,0,0" Click="btnLogout_Click">
+                        Margin="0,200,0,0" Click="btnLogout_Click">
 
                         <Button.Style>
                             <Style TargetType="Button">

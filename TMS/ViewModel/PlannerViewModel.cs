@@ -24,7 +24,7 @@ namespace TMS.ViewModel
         internal MySqlDataReader rdr = null;
         public Dictionary<string, City> Cities = null;
 
-
+        private double timePassed = 0;
 
         private UserAccountModel _currentUserAccount;
         private ViewModelBase _currentChildView;
@@ -68,6 +68,13 @@ namespace TMS.ViewModel
         // commands
         public ICommand ShowCompletedOrdersCommand { get; }
         public ICommand ShowActiveOrderViewCommand { get; }
+        public ICommand ShowOnRouteViewCommand { get; }
+
+        public double TimePassed
+        {
+            get { return timePassed; }
+            set { timePassed = value; OnPropertyChanged(nameof(TimePassed)); }
+        }
 
         public PlannerViewModel()
         {
@@ -76,6 +83,7 @@ namespace TMS.ViewModel
 
             ShowCompletedOrdersCommand = new ViewModelCommand(ExecuteShowCompletedOrdersCommand);
             ShowActiveOrderViewCommand = new ViewModelCommand(ExecuteShowActiveOrderCommand);
+            ShowOnRouteViewCommand = new ViewModelCommand(ExecuteShowOnRouteViewCommand);
 
             ExecuteShowActiveOrderCommand(null);
 
@@ -91,7 +99,12 @@ namespace TMS.ViewModel
 
         }
 
-
+        private void ExecuteShowOnRouteViewCommand(object obj)
+        {
+            CurrentChildView = new OnRouteViewModel();
+            Caption = "OnRoute";
+            Icon = IconChar.Truck;
+        }
 
         private void ExecuteShowActiveOrderCommand(object obj)
         {
@@ -108,12 +121,13 @@ namespace TMS.ViewModel
             Icon = IconChar.Check;
         }
 
-        public PlannerViewModel(string thePassword, string theTable)
+        public PlannerViewModel(string thePassword)
         {
             string connectString = "SERVER=server=127.0.0.1;uid=root;pwd=" + thePassword +
                                    ";database=contracts;";
-            CitiesSetup();
+            
             connection = new MySqlConnection(connectString);
+            CitiesSetup();
             cmd = new MySqlCommand();
             cmd.Connection = connection;
         }
@@ -199,35 +213,121 @@ namespace TMS.ViewModel
             return ret;
         }
 
-        public MySqlConnection AddTrip(int theOrderNum,
-                                       int theCarrier,
-                                       string theOrigin,
-                                       string theDestination)
+        public void AddTrip(int theOrderNum)
         {
-            //string currentCity;
+            Dictionary<string, string> carriers = new Dictionary<string, string>()
+            {
+                { "Windsor", "Planet Express" },
+                { "Hamilton", "Tillman Transport" },
+                { "Oshawa", "Planet Express" },
+                { "Belleville", "Planet Express" },
+                { "Ottawa", "We Haul" },
+                { "Kingston", "Schooner's" },
+                { "London", "Tillman Transport" },
+                { "Toronto", "We Haul" }
+            };
+            string connectString = ConfigurationManager.AppSettings.Get("localDatabase");
 
-            cmd.CommandText = "INSERT INTO trips (OrderNumber, CarrierNumber, Origin, Destination) " +
-                              "Values(" + theOrderNum.ToString() + ", " + theCarrier.ToString() +
-                              ", '" + theOrigin + "', '" + theDestination + "');";
+            connection = new MySqlConnection(connectString);
 
-            // FTL will have no stop till destination
-            // LTL will stop at every city in route till destination
-            //string destination;
-            //while(currentcity == destination) 
-            //{
-            //    cmd.CommandText = "SELECT Origin FROM acceptedContracts "
-            //}
+            cmd.Connection = connection;
+            /* Getting the job type */
+            cmd.CommandText = "SELECT Job_Type FROM acceptedcontracts " +
+                                  "Where OrderNumber = " + theOrderNum.ToString();
+            
+            connection.Open();
+            string theJob = cmd.ExecuteScalar().ToString();
+            /* Converting to online */
+            if (!Int32.TryParse(theJob, out int jobType))
+            {
+                return;
+            }
+            connection.Close();
 
-            MySqlConnection ret = connection;
+            /* Getting the origin city */
+            cmd.CommandText = "SELECT Origin FROM acceptedcontracts " +
+                              "Where OrderNumber = " + theOrderNum.ToString();
+            connection.Open();
+            string origin = cmd.ExecuteScalar().ToString();         // Origin from city
+            connection.Close();
 
-            /* Back to the place where the return is accepted, we would do
-             * connection.Open();
-             * 
-             * make use of the info
-             * when done using it
-             * 
-             * connection.Close() */
-            return ret;
+            /* Getting the destination city */
+            cmd.CommandText = "SELECT Destination FROM acceptedcontracts " +
+                              "Where OrderNumber = " + theOrderNum.ToString();
+            connection.Open();
+            string destination = cmd.ExecuteScalar().ToString();    // Destination of contract
+            connection.Close();
+
+            string currentLocationWest = origin;
+            string currentLocationEast = origin;
+            double hoursEast = 0;
+            double hoursWest = 0;
+            int kmEast = 0;
+            int kmWest = 0;
+            /* We are processing FTL trips */
+            if (jobType >= 0)
+            {
+                hoursWest = hoursWest + 4;
+                hoursEast = hoursEast + 4;
+                while (currentLocationEast != destination || currentLocationWest != destination)
+                {
+                    /* Going East */
+                    City nextEast = null;
+                    if (!Cities.TryGetValue(currentLocationEast, out nextEast))
+                    {
+                        nextEast = new City("", 0, 0, "", "");
+                    }
+
+                    /* Going West */
+                    City nextWest = null;
+                    if (!Cities.TryGetValue(currentLocationWest, out nextWest))
+                    {
+                        nextWest = new City("", 0, 0, "", "");
+                    }
+
+                    if (nextEast.East != destination)
+                    {
+                        currentLocationEast = nextEast.East;
+                        hoursEast += nextEast.Time;
+                        kmEast += nextEast.KMs;
+                    }
+                    if (nextWest.West != destination)
+                    {
+                        currentLocationWest = nextWest.West;
+                        hoursWest += nextWest.Time;
+                        kmWest += nextWest.KMs;
+                    }
+                    if (nextEast.East == destination || nextWest.West == destination)
+                    {
+                        if (nextEast.East == destination)
+                        {
+                            string theCarrier;
+                            carriers.TryGetValue(origin, out theCarrier);
+                            cmd.CommandText = "INSERT trips (OrderNumber, CarrierName, Origin, Destination, Kilometers, Time) " +
+                              "VALUES (" + theOrderNum.ToString() + ", '" + theCarrier + "', '" +
+                              origin + "', '" + destination + "', " + kmEast + ", " + hoursEast + ");";
+                            connection.Open();
+                            cmd.ExecuteNonQuery();
+                            connection.Close();
+                            break;
+                        }
+                        if (nextWest.West == destination)
+                        {
+                            string theCarrier;
+                            carriers.TryGetValue(origin, out theCarrier);
+                            cmd.CommandText = "INSERT trips (OrderNumber, CarrierName, Origin, Destination, Kilometers, Time) " +
+                              "VALUES (" + theOrderNum.ToString() + ", '" + theCarrier + "', '" +
+                              origin + "', '" + destination + "', " + kmWest + ", " + hoursWest + ");";
+                            connection.Open();
+                            cmd.ExecuteNonQuery();
+                            connection.Close();
+                            break;
+                        }
+                    }
+                }
+
+            }
+            
         }
 
         public MySqlConnection CompleteOrder(int orderNumber)
