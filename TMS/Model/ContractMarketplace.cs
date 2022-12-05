@@ -11,8 +11,10 @@
  *      Username: DevOSHT
  *      Password: Snodgr4ss!
 */
+using MySqlConnector;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -27,7 +29,7 @@ namespace TMS {
         public int MarketplacePort { get; set; }
         public string Username { get; private set;}
         public string Password { get; private set; }
-
+        public string Name {get; private set;}
 
         private ContractMarketplace() {
             //there are no defaults, they must be set
@@ -35,6 +37,7 @@ namespace TMS {
             MarketplacePort = 3306;
             Username = "DevOSHT";
             Password = "Snodgr4ss!";
+            Name = "cmp";
         }
 
         //set the ip using the constructor
@@ -50,15 +53,27 @@ namespace TMS {
          * DESCRIPTION  :
          *  attempts to connect to the database at the ip set in the class
          * PARAMETERS   :
-         *  datatype name : purpose
+         *  none
          * RETURNS      :
-         *  dataype : value/condition
+         *  DataTable : a raw table of all the contracts
         */
-        public List<Contract> GetContracts() {
+        public DataTable GetContractsTable() {
             
-            List<Contract> output = new List<Contract>();
+            DataTable Output = new DataTable();
 
             //attempt to connect to the database
+            string myConnectionString = "SERVER="+MarketplaceIp+";DATABASE="+Name+";UID="+Username+";PASSWORD="+Password+";";
+
+            MySqlConnection connection = new MySqlConnection(myConnectionString);
+
+            MySqlCommand cmd = new MySqlCommand("SELECT * FROM Contract", connection);
+            connection.Open();
+            DataTable dt = new DataTable();
+            dt.Load(cmd.ExecuteReader());
+            connection.Close();
+
+            return dt;
+
 
             //do query
             //SELECT * FROM Contract
