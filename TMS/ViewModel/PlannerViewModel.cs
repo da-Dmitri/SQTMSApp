@@ -261,12 +261,11 @@ namespace TMS.ViewModel
             string currentLocationWest = origin;
             string currentLocationEast = origin;
             
-            Cities.TryGetValue(origin, out City tempEast);
-            Cities.TryGetValue(origin, out City tempWest);
-            int kmEast = tempEast.KMs;
-            int kmWest = tempWest.KMs;
-            double hoursEast = tempEast.Time;
-            double hoursWest = tempWest.Time;
+            
+            int kmEast = 0;
+            int kmWest = 0;
+            double hoursEast = 0;
+            double hoursWest = 0;
             /* We are processing FTL trips */
             if (jobType >= 0)
             {
@@ -326,7 +325,7 @@ namespace TMS.ViewModel
                             string theCarrier;
                             Cities.TryGetValue(destination, out City tempKms);
                             hoursWest += tempKms.Time;
-                            kmEast += tempKms.KMs;
+                            kmWest += tempKms.KMs;
                             carriers.TryGetValue(origin, out theCarrier);
                             cmd.CommandText = "INSERT trips (OrderNumber, CarrierName, Origin, Destination, Kilometers, Time) " +
                               "VALUES (" + theOrderNum.ToString() + ", '" + theCarrier + "', '" +
