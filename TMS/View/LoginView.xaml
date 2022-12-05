@@ -28,21 +28,21 @@
     
 
     <Border CornerRadius="10"
-            BorderThickness="2">
+            BorderThickness="1">
         <Border.BorderBrush>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                 <LinearGradientBrush.GradientStops>
-                    <GradientStop Color="#363636" Offset="0"/>
-                    <GradientStop Color="#547980" Offset="1"/>
-
+                    <GradientStop Color="{StaticResource winBorderColor1}" Offset="0"/>
+                    <GradientStop Color="{StaticResource winBorderColor2}" Offset="0.5"/>
+                    <GradientStop Color="{StaticResource winBorderColor3}" Offset="1"/>
                 </LinearGradientBrush.GradientStops>
             </LinearGradientBrush>
         </Border.BorderBrush>
 
         <Border.Background>
             <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
-                <GradientStop Color="#363636" Offset="0"/>
-                <GradientStop Color="#547980" Offset="1"/>
+                <GradientStop Color="{StaticResource primaryBackColor1}" Offset="0"/>
+                <GradientStop Color="{StaticResource primaryBackColor2}" Offset="1"/>
             </LinearGradientBrush>
         </Border.Background>
 
@@ -146,7 +146,7 @@
                        Width="100"/>
 
                 <TextBlock Text="Evil Corp Solutions"
-                           Foreground="white"
+                           Foreground="{StaticResource titleColor1}"
                            FontSize="25"
                            FontFamily="Montserrat"
                            FontWeight="Medium"
@@ -154,7 +154,7 @@
 
 
                 <TextBlock Text="Username"
-                           Foreground="white"
+                           Foreground="{StaticResource titleColor1}"
                            FontSize="12"
                            FontFamily="Montserrat"
                            FontWeight="Medium"
@@ -165,7 +165,7 @@
                          FontSize="13"
                          FontWeight="Medium"
                          FontFamily="Montserrat"
-                         Foreground="white"
+                         Foreground="{StaticResource plainTextColor1}"
                          CaretBrush="LightGray"
                          BorderBrush="DarkGray"
                          BorderThickness="0,0,0,1"
@@ -182,7 +182,7 @@
                 </TextBox>
 
                 <TextBlock Text="Password"
-                           Foreground="white"
+                           Foreground="{StaticResource titleColor1}"
                            FontSize="12"
                            FontFamily="Montserrat"
                            FontWeight="Medium"
@@ -194,7 +194,7 @@
                 </custom_controls:BindablePasswordBox>
 
                 <TextBlock Text="{Binding ErrorMessage}"
-                           Foreground="#D7596D"
+                           Foreground="{StaticResource color4}"
                            FontSize="12"
                            FontFamily="Montserrat"
                            FontWeight="Medium"

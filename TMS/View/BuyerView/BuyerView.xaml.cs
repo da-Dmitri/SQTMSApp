@@ -14,7 +14,6 @@ using System.Windows.Shapes;
 using System.Runtime.InteropServices;
 using System.Runtime;
 using System.Windows.Interop;
-using TMS.ViewModel;
 
 namespace TMS.View
 {
@@ -23,7 +22,6 @@ namespace TMS.View
     /// </summary>
     public partial class BuyerView : Window
     {
-
         public BuyerView()
         {
             InitializeComponent();
@@ -65,12 +63,5 @@ namespace TMS.View
         {
             this.WindowState = WindowState.Minimized;
         }
-
-        private void btnLogout_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
-
-
     }
 }
