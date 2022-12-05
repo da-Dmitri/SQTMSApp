@@ -1,6 +1,7 @@
 ﻿using MySqlConnector;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -41,11 +42,11 @@ namespace TMS.View
 
         private DataTable GetAcceptedContracts()
         {
-            string myConnectionString = "server=127.0.0.1;uid=root;" + "pwd=gupajuse7256;database=contracts";
+            string myConnectionString = ConfigurationManager.AppSettings.Get("localDatabase");
 
             MySqlConnection connection = new MySqlConnection(myConnectionString);
 
-            MySqlCommand cmd = new MySqlCommand("SELECT * FROM acceptedcontracts", connection);
+            MySqlCommand cmd = new MySqlCommand("SELECT * FROM acceptedcontracts WHERE Completed = 'False'", connection);
             connection.Open();
             DataTable dt = new DataTable();
             dt.Load(cmd.ExecuteReader());
@@ -61,12 +62,18 @@ namespace TMS.View
 
         private void btnCompleteOrder_Click(object sender, RoutedEventArgs e)
         {
+            DataRowView row_selected = AcceptedContracts.SelectedItem as DataRowView;
+            int orderNum = (int)row_selected["OrderNumber"];
+            
+
             plannerViewModel = new PlannerViewModel();
+            plannerViewModel.CompleteOrder(orderNum);
+            AcceptedContracts.DataContext = GetAcceptedContracts();
             // Order object
             // Contract
             // Client name
-            
-            
+
+
         }
     }
 }

@@ -34,7 +34,7 @@ namespace TMS.Model
         public Contract Contract { get; set; }
 
         //trips assigned to this order with trip id as the key
-        public Dictionary<int, Trips> AssignedTrips { get; set; }
+        //public Dictionary<int, Trips> AssignedTrips { get; set; }
 
         //relevant cities for the order, with city name as the key
         public Dictionary<string, City> RelevantCities { get; set; }

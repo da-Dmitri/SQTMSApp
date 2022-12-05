@@ -11,6 +11,7 @@ using FontAwesome.Sharp;
 using System.Windows;
 using System.Windows.Input;
 using System.Threading;
+using System.Configuration;
 
 namespace TMS.ViewModel
 {
@@ -21,7 +22,7 @@ namespace TMS.ViewModel
         internal MySqlConnection connection = null;
         internal MySqlCommand cmd = null;
         internal MySqlDataReader rdr = null;
-        public Dictionary<string, City> Cities;
+        public Dictionary<string, City> Cities = null;
 
 
 
@@ -80,6 +81,13 @@ namespace TMS.ViewModel
 
 
             LoadCurrentUserData();
+            string connectString = "SERVER=server=127.0.0.1;uid=root;pwd=" + "gupajuse7256" +
+                       ";database=contracts;";
+            this.Cities = new Dictionary<string, City>();
+            CitiesSetup();
+            connection = new MySqlConnection(connectString);
+            cmd = new MySqlCommand();
+            cmd.Connection = connection;
 
         }
 
@@ -224,10 +232,20 @@ namespace TMS.ViewModel
 
         public MySqlConnection CompleteOrder(int orderNumber)
         {
+            string myConnectionString = ConfigurationManager.AppSettings.Get("localDatabase");
+            MySqlConnection connection = new MySqlConnection(myConnectionString);
+            cmd.Connection = connection;
             cmd.CommandText = "UPDATE acceptedcontracts SET Completed = 'True' WHERE OrderNumber =" +
                               orderNumber + ";";
 
-            MySqlConnection ret = connection;
+            connection.Open();
+            cmd.ExecuteNonQuery();
+            connection.Close();
+           
+
+           
+
+
 
             /* Back to the place where the return is accepted, we would do
              * connection.Open();
@@ -236,7 +254,7 @@ namespace TMS.ViewModel
              * when done using it
              * 
              * connection.Close() */
-            return ret;
+            return connection;
         }
 
 

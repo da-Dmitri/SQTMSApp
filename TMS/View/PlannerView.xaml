@@ -7,7 +7,7 @@
         xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         xmlns:viewModel="clr-namespace:TMS.ViewModel"
         mc:Ignorable="d"
-        Height="450" Width="800"
+        Height="550" Width="800"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         Background="Transparent"
@@ -116,7 +116,7 @@
                         FontFamily="Montserrat"
                         Cursor="Hand"
                         Grid.Column="2"
-                        Margin="0,150,0,0" Click="btnLogout_Click">
+                        Margin="0,265,0,0" Click="btnLogout_Click">
 
                         <Button.Style>
                             <Style TargetType="Button">

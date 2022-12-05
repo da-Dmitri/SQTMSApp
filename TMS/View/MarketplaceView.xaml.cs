@@ -1,6 +1,7 @@
 ﻿using MySqlConnector;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -61,7 +62,7 @@ namespace TMS.View
 
         private DataTable GetMarketPlaceContracts()
         {
-            string myConnectionString = "SERVER=159.89.117.198;DATABASE=cmp;UID=DevOSHT;PASSWORD=Snodgr4ss!";
+            string myConnectionString = ConfigurationManager.AppSettings.Get("contractMarketplaceConnection");
 
             MySqlConnection connection = new MySqlConnection(myConnectionString);
 
@@ -85,7 +86,7 @@ namespace TMS.View
             contract.Destination = row_selected["Destination"].ToString();
             contract.Van_Type = (int)row_selected["Van_Type"];
 
-            myConnectionString = "server=127.0.0.1;uid=root;" + "pwd=gupajuse7256;database=contracts";
+            myConnectionString = ConfigurationManager.AppSettings.Get("localDatabase");
 
             MySqlConnection connection = new MySqlConnection(myConnectionString);
             string queryString = "INSERT INTO acceptedcontracts (Client_Name, Job_Type, Quantity, Origin, Destination, Van_Type) " +

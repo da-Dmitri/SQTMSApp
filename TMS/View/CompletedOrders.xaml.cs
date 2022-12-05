@@ -1,6 +1,7 @@
 ﻿using MySqlConnector;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -36,7 +37,7 @@ namespace TMS.View
 
         private DataTable GetAcceptedContracts()
         {
-            string myConnectionString = "server=127.0.0.1;uid=root;" + "pwd=gupajuse7256;database=contracts";
+            string myConnectionString = ConfigurationManager.AppSettings.Get("localDatabase");
 
             MySqlConnection connection = new MySqlConnection(myConnectionString);
 
