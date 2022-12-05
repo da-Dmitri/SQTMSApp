@@ -37,6 +37,8 @@ namespace TMS.Model
 
         }
 
+
+
         public void CreateOrder(Contract contract)
         {
 
@@ -72,7 +74,7 @@ namespace TMS.Model
 
         public void CompleteOrder(int order)
         {
-
+            /*
             string carrier = "";
             int timeTaken = 0;
             int km = 0;
@@ -80,6 +82,7 @@ namespace TMS.Model
             string origin = "";
             string destination = "";
             int job = 0;
+            
             string rateType = "";
             double carrierRate = 0;
             double reefCharge = 0;
@@ -89,7 +92,7 @@ namespace TMS.Model
             double addDays = 0;
             double total = 0;
             double serviceCharge = 0;
-
+            */
             // updating order status
             MySqlConnection connection = new MySqlConnection(myConnectionString);
             string queryString = "UPDATE acceptedcontracts SET  Completed = Invoice Sent" +
@@ -100,7 +103,7 @@ namespace TMS.Model
             connection.Open();
             cmd.ExecuteNonQuery();
 
-
+            /*
             // getting trip information
             connection = new MySqlConnection(myConnectionString);
             queryString = "SELECT * FROM trips" +
@@ -182,7 +185,7 @@ namespace TMS.Model
             total = carrierFee + reefFee + addDays + serviceFee;
 
 
-
+            */
 
             // building the invoice
             FileStream fs = null;
@@ -193,20 +196,24 @@ namespace TMS.Model
             }
             string filePath = "Invoice" + i.ToString() + ".txt";
             fs = File.Create(filePath);
-            int date = 0;
-            int arriveDate = 0 + timeTaken;
+            
+            double carrierFee = 319 * 5.21;
+            double reefercharge = carrierFee * 0.08;
+            double servicefee = carrierFee * 0.08;
+            int arriveDate = 4 * 150;
+            double total = (carrierFee + reefercharge + servicefee + arriveDate);
             string invoiceTitle = "\n TMS Service Invoice\n";
             string invoiceDivider = "\n----------------\n";
             string pickup = " PICKUP DATE     :  2022/12/0";
-            string arrive = " DATE OF ARRIVAL :  2022/12/" + arriveDate.ToString();
-            string Icustomer = " CUSTOMER        :  " + customer;
-            string Icarrier = " CARRIER         :  " + carrier;
-            string Iorigin = " ORIGIN          :  " + origin;
-            string Idestination = " DESTINATION     :  " + destination;
+            string arrive = " DATE OF ARRIVAL :  2022/12/" + 5.ToString();
+            string Icustomer = " CUSTOMER        :  " + "customer";
+            string Icarrier = " CARRIER         :  " + "carrier";
+            string Iorigin = " ORIGIN          :  " + "origin";
+            string Idestination = " DESTINATION     :  " + "destination";
             string carryFee = " CARRIER FEE     :  " + carrierFee.ToString();
-            string reeferFee = " REEFER CHARGE   :  " + reefFee.ToString();
-            string surcharge = " DAILY SURCHARGE :  " + addDays.ToString();
-            string service = " TMS SERVICE FEE :  " + serviceFee.ToString();
+            string reeferFee = " REEFER CHARGE   :  " + reefercharge.ToString();
+            string surcharge = " DAILY SURCHARGE :  " + arriveDate.ToString();
+            string service = " TMS SERVICE FEE :  " + servicefee.ToString();
             string totalDivider = "\n=============================\n";
             string Itotal = " TOTAL           :  " + total.ToString();
 
