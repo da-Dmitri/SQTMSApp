@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TMS.Model;
 using TMS.ViewModel;
 
 namespace TMS.View
@@ -76,6 +77,8 @@ namespace TMS.View
                 // complete order
                 PlannerViewModel plannerViewModel = new PlannerViewModel();
                 plannerViewModel.CompleteOrder(orderNum);
+
+                BuyerModel buyerModel = new BuyerModel();
 
                 trips.DataContext = GetTrips();
 
